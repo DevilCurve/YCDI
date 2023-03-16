@@ -1,0 +1,133 @@
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head><script src="/gdpr/gdprscript.js?buildTime=1677188157"></script>
+    <meta charset="utf-8" />
+    <title>YCDI</title>
+</head>
+<body>
+    <style>
+        #frame001 {
+            border: 2px solid black;
+            background-color: lightpink;
+            border-radius: 2px;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+    <div id="frame001">
+        <h2>YCDI</h2>
+        <text>โจทย์: </text><text id="number001">0</text><text> / 10</text><br />
+        <text>คะแนน: </text><text id="score001">0</text><text> / 10</text>
+        <hr />
+        <p id="message001"></p>
+        <p id="message002"></p>
+        <p id="message102"></p>
+        <p id="message012"></p>
+        <p id="show001"></p>
+        <p id="message003"></p>
+        <p id="message004"></p>
+        <div id="disappear001">
+            <button onclick="begin001()">ลุย!</button>
+        </div>
+    </div>
+
+    <script>
+        var a001;
+        var a002;
+        var a003;
+        var operator;
+        var z = 0;
+        // z++;
+        var y = 0;
+        y++;
+
+        function begin001() {
+            var operators = ['+', '-', '*', '/'];
+            operator = operators[Math.floor(Math.random() * operators.length)];
+            if (operator === '/') {
+                a002 = Math.floor(Math.random() * 10) + 1;
+                a001 = Math.floor(Math.random() * 10) * a002;
+            } else if (operator === '*') { 
+                a001 = Math.floor(Math.random() * 10) + 1;
+                a002 = Math.floor(Math.random() * 10) + 1;
+            } else {
+                a001 = Math.floor(Math.random() * 50) + 1;
+                a002 = Math.floor(Math.random() * 50) + 1;
+            }
+            if (operator === '-' && a001 < a002) {
+                var temp = a001;
+                a001 = a002;
+                a002 = temp;
+            }
+            switch(operator) {
+                case '+':
+                    a003 = a001 + a002;
+                    break;
+                case '-':
+                    a003 = a001 - a002;
+                    break;
+                case '*':
+                    a003 = a001 * a002;
+                    break;
+                case '/':
+                    a003 = Math.floor(a001 / a002);
+                    break;
+            }
+            message012.innerHTML = "";
+            message002.innerHTML = "";
+            message102.innerHTML = "";
+            message003.innerHTML = "";
+            message004.innerHTML = "";
+            show001.innerHTML = "";
+            number001.innerHTML = y++;
+            disappear001.innerHTML = "";
+            message001.innerHTML = a001 + "<br />" + operator + "<br />" + a002 + "<br />" + "__________";
+            message003.innerHTML = "<input type=text id=input001 /> <button onclick=submit001()>ส่งคำตอบ</button>";
+
+            if (y > 11) {
+                if (z === 10) {
+                    message012.innerHTML = "ได้เต็มเลยเก่งมาก🥰";
+                } else if (z > 8) {
+                    message012.innerHTML = "เก่งมาก";
+                } else if (z > 5) {
+                    message012.innerHTML = "มาได้ครึ่งทางเก่งมากแล้ว";
+                } else {
+                    message012.innerHTML = "พยายามเพิ่มอีกนิดนะ";
+                }
+                message001.innerHTML = "เกมจบแล้ว สนุกไหมเอ่ย";
+                number001.innerHTML = (y - 2);
+                message002.innerHTML = "คุณได้คะแนน " + z + " จาก 10";
+                message003.innerHTML = "ขอบคุณที่ร่วมสนุก กดปุ่มเพื่อเริ่มเล่นใหม่ได้นะ";
+                show001.innerHTML = "";
+                message004.innerHTML = "<button onclick=repeat001()>เริ่มใหม่😜</button>";
+            }
+        }
+
+        function submit001() {
+            var answer001 = parseInt(input001.value);
+            if (isNaN(answer001)) {
+                message003.innerHTML = "โปรดใส่ตัวเลข | รีเว็ป";
+                return;
+            }
+            show001.innerHTML = "คุณตอบ : " + answer001;
+            if (answer001 == a003) {
+                score001.innerHTML = ++z
+                message003.innerHTML = "ถูกต้อง😁";
+                message102.innerHTML = "คำตอบที่ถูกต้อง : " + a003;
+                message002.innerHTML = "";
+                message004.innerHTML = "<button onclick=begin001()>ต่อไป</button>";
+            }
+            else {
+                message003.innerHTML = "ผิด😔";
+                message102.innerHTML = "คำตอบที่ถูกต้อง : " + a003;
+                message002.innerHTML = "";
+                message004.innerHTML = "<button onclick=begin001()>ต่อไป</button>";
+            }
+        }
+
+        function repeat001() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
